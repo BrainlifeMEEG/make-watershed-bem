@@ -3,12 +3,10 @@
 #PBS -l walltime=10:00:00
 #PBS -l vmem=20gb
 
+# Author: Kami Salibayeva
+
 set -e
 set -x
-
-# Make output directories
-mkdir -p out_figs
-mkdir -p out_dir_report
 
 # export SUBJECTS_DIR="$(dirname "$out_dir")"
 
