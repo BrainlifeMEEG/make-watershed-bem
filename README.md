@@ -1,4 +1,16 @@
-# Make Watershed BEM
+<h1 align="center">Make watershed BEM</h1>
+
+<p align="center">
+  Computes watershed BEM surfaces (inner skull, outer skull, scalp) from a FreeSurfer reconstruction with MNE-Python make_watershed_bem, for MEG/EEG forward modelling.
+</p>
+
+<p align="center">
+  <a href="https://github.com/brainlife/abcd-spec"><img src="https://img.shields.io/badge/ABCD_Spec-v1.1-green.svg" alt="ABCD Spec v1.1"></a>
+  <a href="https://doi.org/10.25663/brainlife.app.807"><img src="https://img.shields.io/badge/Brainlife-brainlife.app.807-blue.svg" alt="Run on brainlife.io"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-see_LICENSE-lightgrey.svg" alt="License"></a>
+</p>
+
+## At a glance
 
 <!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
 
@@ -8,56 +20,47 @@ Copies the FreeSurfer subject directory, runs mne.bem.make_watershed_bem (which 
 
 | | |
 |---|---|
-| 📥 **Inputs** | `neuro/freesurfer` |
-| 📤 **Outputs** | `raw` |
-| 🐳 **Container** | `brainlifemeeg/mne-freesurfer:1.12.1-7.4.1` |
-| ⚙️ **Resources** | 8 CPUs |
-| 🔑 **Requires** | `FS_LICENSE` |
-| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.807](https://doi.org/10.25663/brainlife.app.807) |
+| **Inputs** | `neuro/freesurfer` |
+| **Outputs** | `raw` |
+| **Container** | `brainlifemeeg/mne-freesurfer:1.12.1-7.4.1` |
+| **Resources** | 8 CPUs |
+| **Requires** | `FS_LICENSE` |
+| **Run it** | [doi.org/10.25663/brainlife.app.807](https://doi.org/10.25663/brainlife.app.807) |
 
-#### 📥 Inputs
+#### Inputs
 
 | Input | Datatype | Required | Description |
 |---|---|---|---|
 | `freesurfer` | `neuro/freesurfer` | yes | FreeSurfer recon-all subject directory. |
 
-#### 📤 Outputs
+#### Outputs
 
 | Output | Datatype | Description |
 |---|---|---|
 | `out_dir` | `raw` | Copy of the FreeSurfer subject directory with the watershed BEM surface files added. |
 
-📚 **References used by this App:**
-- Gramfort A, et al. MEG and EEG data analysis with MNE-Python. Front Neurosci 7(267):1-13 (2013). [doi:10.3389/fnins.2013.00267](https://doi.org/10.3389/fnins.2013.00267)
-
 <!-- brainlife-app:end -->
 
-[![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.807-blue.svg)](https://doi.org/10.25663/brainlife.app.807)
+## Running the App
 
-## Description
+### On brainlife.io
 
-This app computes a watershed Boundary Element Model (BEM) surface from a FreeSurfer subject
-reconstruction, using [MNE-Python's `mne.bem.make_watershed_bem`](https://mne.tools/stable/generated/mne.bem.make_watershed_bem.html#mne-bem-make-watershed-bem)
-function (which wraps FreeSurfer's watershed algorithm). The FreeSurfer subject directory is
-copied into `out_dir`, the watershed BEM surfaces are generated there, and a QC report
-visualizing the BEM surfaces over the MRI is produced.
+Open the App at [doi.org/10.25663/brainlife.app.807](https://doi.org/10.25663/brainlife.app.807), choose `neuro/freesurfer` from your project and press **Execute**. The results are saved to your project as `raw`.
 
-The app generates:
-- The FreeSurfer subject reconstruction, copied into `out_dir`, with the generated `.surf` BEM
-  surface files added to it
-- An HTML QC report with MRI/BEM surface visualization
+### Locally
 
-## Inputs
+You need [Singularity/Apptainer](https://apptainer.org/) (the App runs in `brainlifemeeg/mne-freesurfer:1.12.1-7.4.1`), [`jq`](https://jqlang.github.io/jq/), `FS_LICENSE`.
 
-- **`output`** (`neuro/freesurfer`): FreeSurfer subject reconstruction directory (`recon-all`
-  output) to compute the watershed BEM surfaces from (required)
+1. Clone this repository.
+2. Create `config.json` with the paths to your inputs and the parameters:
 
-## Outputs
+   ```json
+   {
+       "output": "/path/to/freesurfer/output"
+   }
+   ```
 
-- `out_dir/`: copy of the input FreeSurfer subject directory, including the generated watershed
-  BEM `.surf` files
-- `out_report/report.html`: QC report with MRI/BEM surface visualization
-- `product.json`: metadata about the BEM computation
+3. Run `./main`.
 
 ## Configuration Parameters
 
@@ -65,47 +68,52 @@ The app generates:
 |-----|------|---------|-------------|
 | `output` | string (path) | `in_dir/freesurfer` | Path to the FreeSurfer subject reconstruction directory (`SUBJECTS_DIR`) |
 
-## Usage
-
-### Running on Brainlife.io
-
-1. Go to the [Make watershed BEM](https://doi.org/10.25663/brainlife.app.807) app page on
-   brainlife.io.
-2. Select a FreeSurfer reconstruction (`neuro/freesurfer`) as input.
-3. Submit the process and retrieve `out_dir` (the FreeSurfer subject directory with its new BEM
-   surfaces) and `out_report/report.html` once it completes.
-
-### Local Testing
+## Local Testing
 
 ```bash
 # Create a config.json pointing to a FreeSurfer subject reconstruction directory
 python3 main.py
 ```
 
-## Authors
-- [Kami Salibayeva] (ksalibay@iu.edu)
+## Citing
 
-### Contributors
-- [Kami Salibayeva] (ksalibay@iu.edu)
-- [Maximilien Chaumon] (maximilien.chaumon@icm-institute.org)
+If you use this App, please cite it, the software it builds on and brainlife.io:
+
+- Make watershed BEM. brainlife.io App. [doi:10.25663/brainlife.app.807](https://doi.org/10.25663/brainlife.app.807)
+- Gramfort A, et al. MEG and EEG data analysis with MNE-Python. Front Neurosci 7(267):1-13 (2013). [doi:10.3389/fnins.2013.00267](https://doi.org/10.3389/fnins.2013.00267)
+- Fischl. FreeSurfer. *NeuroImage* 62:774-781 (2012). [doi:10.1016/j.neuroimage.2012.01.021](https://doi.org/10.1016/j.neuroimage.2012.01.021)
+- Hayashi S, Caron BA, Heinsfeld AS, et al. brainlife.io: a decentralized and open-source cloud platform to support neuroscience research. *Nature Methods* 21:809–813 (2024). [doi:10.1038/s41592-024-02237-2](https://doi.org/10.1038/s41592-024-02237-2)
+- Avesani P, McPherson B, Hayashi S, et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. *Scientific Data* 6:69 (2019). [doi:10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
+
+## Authors
+
+- [Kami Salibayeva]
+
+**Contributors**
+
+- [Kami Salibayeva]
+- [Maximilien Chaumon]
 - [Guiomar Niso]
 
-## Citations
+## Funding
 
-1. Hayashi, S., Caron, B.A., Heinsfeld, A.S. et al. brainlife.io: a decentralized and open-source cloud platform to support neuroscience research. Nat Methods 21, 809–813 (2024). https://doi.org/10.1038/s41592-024-02237-2
-2. Gramfort, A. et al. MEG and EEG data analysis with MNE-Python. Front. Neurosci. 7, 267 (2013). https://doi.org/10.3389/fnins.2013.00267
+[![Wellcome-226486/Z/22/Z](https://img.shields.io/badge/Wellcome-226486%2FZ%2F22%2FZ-purple.svg)](https://wellcome.org/)
+[![NIH-NINDS-U24NS140384](https://img.shields.io/badge/NIH_NINDS-U24NS140384-green.svg)](https://reporter.nih.gov/project-details/11261037)
+[![NIH-NINDS-UM1NS132207](https://img.shields.io/badge/NIH_NINDS-UM1NS132207-green.svg)](https://reporter.nih.gov/project-details/11411328)
+[![NIH-NIBIB-R01EB029272](https://img.shields.io/badge/NIH_NIBIB-R01EB029272-green.svg)](https://reporter.nih.gov/project-details/10262925)
+[![NIH-NIBIB-R01EB030896](https://img.shields.io/badge/NIH_NIBIB-R01EB030896-green.svg)](https://reporter.nih.gov/project-details/10428625)
+[![NIH-NIMH-R01MH126699](https://img.shields.io/badge/NIH_NIMH-R01MH126699-green.svg)](https://reporter.nih.gov/project-details/10460628)
+[![NIH-NIDCD-R01DC020088](https://img.shields.io/badge/NIH_NIDCD-R01DC020088-green.svg)](https://reporter.nih.gov/project-details/11140284)
+[![NSF-BCS-1734853](https://img.shields.io/badge/NSF_BCS-1734853-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1734853)
+[![NSF-BCS-2203524](https://img.shields.io/badge/NSF_BCS-2203524-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2203524)
+[![NSF-IIS-1636893](https://img.shields.io/badge/NSF_IIS-1636893-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1636893)
+[![NSF-OAC-2148729](https://img.shields.io/badge/NSF_OAC-2148729-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2148729)
+[![NSF-IIS-1912270](https://img.shields.io/badge/NSF_IIS-1912270-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1912270)
+[![NSF-IIS-2148700](https://img.shields.io/badge/NSF_IIS-2148700-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2148700)
+[![NSF-OAC-1916518](https://img.shields.io/badge/NSF_OAC-1916518-blue.svg)](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1916518)
 
-## Funding Acknowledgement
-
-brainlife.io is publicly funded and for the sustainability of the project it is helpful to Acknowledge the use of the platform. We kindly ask that you acknowledge the funding below in your code and publications. Copy and paste the following lines into your repository when using this code.
-
-[![NSF-BCS-1734853](https://img.shields.io/badge/NSF_BCS-1734853-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1734853)
-[![NSF-BCS-1636893](https://img.shields.io/badge/NSF_BCS-1636893-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1636893)
-[![NSF-ACI-1916518](https://img.shields.io/badge/NSF_ACI-1916518-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1916518)
-[![NSF-IIS-1912270](https://img.shields.io/badge/NSF_IIS-1912270-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1912270)
-[![NIH-NIBIB-R01EB029272](https://img.shields.io/badge/NIH_NIBIB-R01EB029272-green.svg)](https://grantome.com/grant/NIH/R01-EB029272-01)
-[![NIH-NIBIB-R01EB030896](https://img.shields.io/badge/NIH_NIBIB-R01EB030896-green.svg)](https://grantome.com/grant/NIH/R01-EB030896-01)
+<sub>brainlife.io, which runs this App, is publicly funded by Wellcome, the U.S. National Institutes of Health and the U.S. National Science Foundation; acknowledging that support helps keep it running.</sub>
 
 ## License
 
-Copyright (c) 2026 MEEG Brainlife team. Licensed under AGPL-3.0, see [license.txt](license.txt).
+See [LICENSE](LICENSE).
