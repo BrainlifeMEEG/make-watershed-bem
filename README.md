@@ -1,5 +1,37 @@
 # Make Watershed BEM
 
+<!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
+
+> **Computes watershed BEM surfaces (inner skull, outer skull, scalp) from a FreeSurfer reconstruction with MNE-Python make_watershed_bem, for MEG/EEG forward modelling.**
+
+Copies the FreeSurfer subject directory, runs mne.bem.make_watershed_bem (which wraps FreeSurfer's watershed algorithm) to add the BEM surfaces, and builds an HTML QC report of the surfaces over the MRI. Use it before computing a BEM solution and forward model for source localisation. Needs a completed recon-all directory and a FreeSurfer license.
+
+| | |
+|---|---|
+| 📥 **Inputs** | `neuro/freesurfer` |
+| 📤 **Outputs** | `raw` |
+| 🐳 **Container** | `brainlifemeeg/mne-freesurfer:1.12.1-7.4.1` |
+| ⚙️ **Resources** | 8 CPUs |
+| 🔑 **Requires** | `FS_LICENSE` |
+| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.807](https://doi.org/10.25663/brainlife.app.807) |
+
+#### 📥 Inputs
+
+| Input | Datatype | Required | Description |
+|---|---|---|---|
+| `freesurfer` | `neuro/freesurfer` | yes | FreeSurfer recon-all subject directory. |
+
+#### 📤 Outputs
+
+| Output | Datatype | Description |
+|---|---|---|
+| `out_dir` | `raw` | Copy of the FreeSurfer subject directory with the watershed BEM surface files added. |
+
+📚 **References used by this App:**
+- Gramfort A, et al. MEG and EEG data analysis with MNE-Python. Front Neurosci 7(267):1-13 (2013). [doi:10.3389/fnins.2013.00267](https://doi.org/10.3389/fnins.2013.00267)
+
+<!-- brainlife-app:end -->
+
 [![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.807-blue.svg)](https://doi.org/10.25663/brainlife.app.807)
 
 ## Description
